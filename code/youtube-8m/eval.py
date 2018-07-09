@@ -46,7 +46,7 @@ if __name__ == "__main__":
       "sequence feature as well as a 'labels' int64 context feature.")
 
   # Other flags.
-  flags.DEFINE_integer("batch_size", 1024,
+  flags.DEFINE_integer("batch_size", 128,
                        "How many examples to process per batch.")
   flags.DEFINE_integer("num_readers", 8,
                        "How many threads to use for reading input files.")
@@ -62,7 +62,7 @@ def find_class_by_name(name, modules):
 
 def get_input_evaluation_tensors(reader,
                                  data_pattern,
-                                 batch_size=1024,
+                                 batch_size=256,
                                  num_readers=1):
   """Creates the section of the graph which reads the evaluation data.
 
@@ -103,7 +103,7 @@ def build_graph(reader,
                 model,
                 eval_data_pattern,
                 label_loss_fn,
-                batch_size=1024,
+                batch_size=256,
                 num_readers=1):
   """Creates the Tensorflow graph for evaluation.
 

@@ -65,10 +65,10 @@ if __name__ == "__main__":
       " new model instance.")
 
   # Training flags.
-  flags.DEFINE_integer("num_gpu", 1,
+  flags.DEFINE_integer("num_gpu", 2,
                        "The maximum number of GPU devices to use for training. "
                        "Flag only applies if GPUs are installed")
-  flags.DEFINE_integer("batch_size", 1024,
+  flags.DEFINE_integer("batch_size", 256,
                        "How many examples to process per batch for training.")
   flags.DEFINE_string("label_loss", "CrossEntropyLoss",
                       "Which loss function to use for training the model.")
@@ -87,7 +87,7 @@ if __name__ == "__main__":
   flags.DEFINE_integer("num_epochs", 5,
                        "How many passes to make over the dataset before "
                        "halting training.")
-  flags.DEFINE_integer("max_steps", None,
+  flags.DEFINE_integer("max_steps", 200,
                        "The maximum number of iterations of the training loop.")
   flags.DEFINE_integer("export_model_steps", 1000,
                        "The period, in number of steps, with which the model "
@@ -173,7 +173,7 @@ def get_input_data_tensors(reader,
         batch_size=batch_size,
         capacity=batch_size * 5,
         min_after_dequeue=batch_size,
-        allow_smaller_final_batch=True,
+        allow_smaller_final_batch=False,
         enqueue_many=True)
 
 
