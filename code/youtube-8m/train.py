@@ -24,6 +24,7 @@ import frame_level_models
 import video_level_models
 import readers
 import tensorflow as tf
+from tensorflow.python.lib.io import file_io
 import tensorflow.contrib.slim as slim
 from tensorflow import app
 from tensorflow import flags
@@ -65,7 +66,7 @@ if __name__ == "__main__":
       " new model instance.")
 
   # Training flags.
-  flags.DEFINE_integer("num_gpu", 2,
+  flags.DEFINE_integer("num_gpu", 8,
                        "The maximum number of GPU devices to use for training. "
                        "Flag only applies if GPUs are installed")
   flags.DEFINE_integer("batch_size", 256,
@@ -87,7 +88,7 @@ if __name__ == "__main__":
   flags.DEFINE_integer("num_epochs", 5,
                        "How many passes to make over the dataset before "
                        "halting training.")
-  flags.DEFINE_integer("max_steps", 200,
+  flags.DEFINE_integer("max_steps", 100,
                        "The maximum number of iterations of the training loop.")
   flags.DEFINE_integer("export_model_steps", 1000,
                        "The period, in number of steps, with which the model "
@@ -390,8 +391,8 @@ class Trainer(object):
         "label_loss": FLAGS.label_loss,
     }
     flags_json_path = os.path.join(FLAGS.train_dir, "model_flags.json")
-    if os.path.exists(flags_json_path):
-      existing_flags = json.load(open(flags_json_path))
+    if file_io.file_exists(flags_json_path):
+      existing_flags = json.load(file_io.FileIO(flags_json_path, mode="r"))
       if existing_flags != model_flags_dict:
         logging.error("Model flags do not match existing file %s. Please "
                       "delete the file, change --train_dir, or pass flag "
@@ -402,7 +403,7 @@ class Trainer(object):
         exit(1)
     else:
       # Write the file.
-      with open(flags_json_path, "w") as fout:
+      with file_io.FileIO(flags_json_path, mode="w") as fout:
         fout.write(json.dumps(model_flags_dict))
 
     target, device_fn = self.start_server_if_distributed()
