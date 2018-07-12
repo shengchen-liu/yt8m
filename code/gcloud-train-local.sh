@@ -1,5 +1,5 @@
-JOB_DIR="yt8m_train_local"
-GCS_DATA_FILE="./data/data.csv"
+JOB_DIR="yt8m_train_local/model1"
+# GCS_DATA_FILE="./data/data.csv"
 
 # gcloud ml-engine local train --package-path trainer \
 #                              --module-name trainer.task \

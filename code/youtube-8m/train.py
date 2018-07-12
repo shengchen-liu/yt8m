@@ -88,7 +88,7 @@ if __name__ == "__main__":
   flags.DEFINE_integer("num_epochs", 5,
                        "How many passes to make over the dataset before "
                        "halting training.")
-  flags.DEFINE_integer("max_steps", 100,
+  flags.DEFINE_integer("max_steps", None,
                        "The maximum number of iterations of the training loop.")
   flags.DEFINE_integer("export_model_steps", 1000,
                        "The period, in number of steps, with which the model "
@@ -316,18 +316,21 @@ def build_graph(reader,
           gradients = optimizer.compute_gradients(final_loss,
               colocate_gradients_with_ops=False)
           tower_gradients.append(gradients)
-  label_loss = tf.reduce_mean(tf.stack(tower_label_losses))
-  tf.summary.scalar("label_loss", label_loss)
-  if regularization_penalty != 0:
-    reg_loss = tf.reduce_mean(tf.stack(tower_reg_losses))
-    tf.summary.scalar("reg_loss", reg_loss)
+  with tf.name_scope("accuracy"):
+      label_loss = tf.reduce_mean(tf.stack(tower_label_losses))
+      tf.summary.scalar("label_loss", label_loss)
+      if regularization_penalty != 0:
+        reg_loss = tf.reduce_mean(tf.stack(tower_reg_losses))
+        tf.summary.scalar("reg_loss", reg_loss)
+
   merged_gradients = utils.combine_gradients(tower_gradients)
 
   if clip_gradient_norm > 0:
     with tf.name_scope('clip_grads'):
       merged_gradients = utils.clip_gradient_norms(merged_gradients, clip_gradient_norm)
 
-  train_op = optimizer.apply_gradients(merged_gradients, global_step=global_step)
+  with tf.name_scope("train"):
+    train_op = optimizer.apply_gradients(merged_gradients, global_step=global_step)
 
   tf.add_to_collection("global_step", global_step)
   tf.add_to_collection("loss", label_loss)

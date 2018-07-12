@@ -24,7 +24,13 @@ gcloud --verbosity=debug ml-engine jobs submit training $JOB_NAME \
                                                       --package-path=youtube-8m \
                                                       --module-name=youtube-8m.train \
                                                       --staging-bucket=$BUCKET_NAME --region=us-east1 \
-                                                      --config=youtube-8m/cloudml-gpu.yaml \
+                                                      --config=youtube-8m/cloudml-4gpu.yaml \
                                                       -- --train_data_pattern='gs://youtube8m-ml-us-east1/2/video/train/train*.tfrecord' \
-                                                      --model=LogisticModel \
-                                                      --train_dir=$BUCKET_NAME/yt8m_train_video_level_logistic_model
+                                                      --model=MoeModel \
+                                                      --train_dir=$BUCKET_NAME/yt8m_train_video_level_MoeModel/epoch8 \
+                                                      --feature_names='mean_rgb,mean_audio' \
+                                                      --feature_sizes='1024,128' \
+                                                      --num_epochs=8 \
+                                                      --num_readers=12 \
+                                                      --start_new_model=True \
+
