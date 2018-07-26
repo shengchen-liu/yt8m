@@ -12,4 +12,4 @@ gcloud --verbosity=debug ml-engine jobs \
                 -- --eval_data_pattern='gs://youtube8m-ml-us-east1/2/frame/validate/validate*.tfrecord' \
                 --model=LstmModel \
                 --train_dir=$BUCKET_NAME/${JOB_TO_EVAL} \
-                --run_once=True
+                # --run_once=True

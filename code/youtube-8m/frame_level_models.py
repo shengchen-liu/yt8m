@@ -14,15 +14,14 @@
 
 """Contains a collection of models which operate on variable-length sequences.
 """
-import math
 
-import models
-import video_level_models
-import tensorflow as tf
-import model_utils as utils
+import sys
+from os.path import dirname
+if dirname(__file__) not in sys.path:
+  sys.path.append(dirname(__file__))
 
-import tensorflow.contrib.slim as slim
-from tensorflow import flags
+# from all_frame_models.multiscale_cnn_lstm_model import *
+from all_frame_models import *
 
 FLAGS = flags.FLAGS
 flags.DEFINE_integer("iterations", 30,
@@ -44,193 +43,237 @@ flags.DEFINE_string("video_level_classifier_model", "MoeModel",
                     "Some Frame-Level models can be decomposed into a "
                     "generalized pooling operation followed by a "
                     "classifier layer")
-flags.DEFINE_integer("lstm_cells", 1024, "Number of LSTM cells.")
+# flags.DEFINE_integer("lstm_cells", 1024, "Number of LSTM cells.")
+flags.DEFINE_string("lstm_cells", "1024", "Number of LSTM cells.")
 flags.DEFINE_integer("lstm_layers", 2, "Number of LSTM layers.")
+flags.DEFINE_bool("rnn_swap_memory", False, "If true, swap_memory = True.")
 
-class FrameLevelLogisticModel(models.BaseModel):
+flags.DEFINE_integer("multiscale_cnn_lstm_layers", 1, "number of layers in multiscale cnn_lstm.")
+flags.DEFINE_integer("multiscale_cnn_gru_layers", 1, "number of layers in gru cnn_lstm.")
 
-  def create_model(self, model_input, vocab_size, num_frames, **unused_params):
-    """Creates a model which uses a logistic classifier over the average of the
-    frame-level features.
+flags.DEFINE_bool("is_training", False, "used in batch normalization.")
 
-    This class is intended to be an example for implementors of frame level
-    models. If you want to train a model over averaged features it is more
-    efficient to average them beforehand rather than on the fly.
+# -----------------------------netvlad
+flags.DEFINE_bool("gating_remove_diag", False,
+                  "Remove diag for self gating")
+flags.DEFINE_bool("lightvlad", False,
+                  "Light or full NetVLAD")
+flags.DEFINE_bool("vlagd", False,
+                  "vlagd of vlad")
 
-    Args:
-      model_input: A 'batch_size' x 'max_frames' x 'num_features' matrix of
-                   input features.
-      vocab_size: The number of classes in the dataset.
-      num_frames: A vector of length 'batch' which indicates the number of
-           frames for each video (before padding).
+flags.DEFINE_bool("dbof_relu", True, 'add ReLU to hidden layer')
+flags.DEFINE_integer("dbof_var_features", 0,
+                     "Variance features on top of Dbof cluster layer.")
 
-    Returns:
-      A dictionary with a tensor containing the probability predictions of the
-      model in the 'predictions' key. The dimensions of the tensor are
-      'batch_size' x 'num_classes'.
-    """
-    num_frames = tf.cast(tf.expand_dims(num_frames, 1), tf.float32)
-    feature_size = model_input.get_shape().as_list()[2]
+flags.DEFINE_string("dbof_activation", "relu", 'dbof activation')
 
-    denominators = tf.reshape(
-        tf.tile(num_frames, [1, feature_size]), [-1, feature_size])
-    avg_pooled = tf.reduce_sum(model_input,
-                               axis=[1]) / denominators
+flags.DEFINE_bool("softdbof_maxpool", False, 'add max pool to soft dbof')
 
-    output = slim.fully_connected(
-        avg_pooled, vocab_size, activation_fn=tf.nn.sigmoid,
-        weights_regularizer=slim.l2_regularizer(1e-8))
-    return {"predictions": output}
+flags.DEFINE_integer("netvlad_cluster_size", 64,
+                     "Number of units in the NetVLAD cluster layer.")
+flags.DEFINE_bool("netvlad_relu", True, 'add ReLU to hidden layer')
+flags.DEFINE_integer("netvlad_dimred", -1,
+                     "NetVLAD output dimension reduction")
+flags.DEFINE_integer("gatednetvlad_dimred", 1024,
+                     "GatedNetVLAD output dimension reduction")
 
-class DbofModel(models.BaseModel):
-  """Creates a Deep Bag of Frames model.
+flags.DEFINE_bool("gating", False,
+                  "Gating for NetVLAD")
+flags.DEFINE_integer("hidden_size", 1024,
+                     "size of hidden layer for BasicStatModel.")
 
-  The model projects the features for each frame into a higher dimensional
-  'clustering' space, pools across frames in that space, and then
-  uses a configurable video-level model to classify the now aggregated features.
+flags.DEFINE_integer("netvlad_hidden_size", 1024,
+                     "Number of units in the NetVLAD hidden layer.")
 
-  The model will randomly sample either frames or sequences of frames during
-  training to speed up convergence.
+flags.DEFINE_integer("netvlad_hidden_size_video", 1024,
+                     "Number of units in the NetVLAD video hidden layer.")
 
-  Args:
-    model_input: A 'batch_size' x 'max_frames' x 'num_features' matrix of
-                 input features.
-    vocab_size: The number of classes in the dataset.
-    num_frames: A vector of length 'batch' which indicates the number of
-         frames for each video (before padding).
+flags.DEFINE_integer("netvlad_hidden_size_audio", 64,
+                     "Number of units in the NetVLAD audio hidden layer.")
 
-  Returns:
-    A dictionary with a tensor containing the probability predictions of the
-    model in the 'predictions' key. The dimensions of the tensor are
-    'batch_size' x 'num_classes'.
-  """
+flags.DEFINE_bool("netvlad_add_batch_norm", True,
+                  "Adds batch normalization to the DBoF model.")
 
-  def create_model(self,
-                   model_input,
-                   vocab_size,
-                   num_frames,
-                   iterations=None,
-                   add_batch_norm=None,
-                   sample_random_frames=None,
-                   cluster_size=None,
-                   hidden_size=None,
-                   is_training=True,
-                   **unused_params):
-    iterations = iterations or FLAGS.iterations
-    add_batch_norm = add_batch_norm or FLAGS.dbof_add_batch_norm
-    random_frames = sample_random_frames or FLAGS.sample_random_frames
-    cluster_size = cluster_size or FLAGS.dbof_cluster_size
-    hidden1_size = hidden_size or FLAGS.dbof_hidden_size
+flags.DEFINE_integer("fv_cluster_size", 64,
+                     "Number of units in the NetVLAD cluster layer.")
 
-    num_frames = tf.cast(tf.expand_dims(num_frames, 1), tf.float32)
-    if random_frames:
-      model_input = utils.SampleRandomFrames(model_input, num_frames,
-                                             iterations)
-    else:
-      model_input = utils.SampleRandomSequence(model_input, num_frames,
-                                               iterations)
-    max_frames = model_input.get_shape().as_list()[1]
-    feature_size = model_input.get_shape().as_list()[2]
-    reshaped_input = tf.reshape(model_input, [-1, feature_size])
-    tf.summary.histogram("input_hist", reshaped_input)
+flags.DEFINE_integer("fv_hidden_size", 2048,
+                     "Number of units in the NetVLAD hidden layer.")
+flags.DEFINE_bool("fv_relu", True,
+                  "ReLU after the NetFV hidden layer.")
 
-    if add_batch_norm:
-      reshaped_input = slim.batch_norm(
-          reshaped_input,
-          center=True,
-          scale=True,
-          is_training=is_training,
-          scope="input_bn")
+flags.DEFINE_bool("fv_couple_weights", True,
+                  "Coupling cluster weights or not")
 
-    cluster_weights = tf.get_variable("cluster_weights",
-      [feature_size, cluster_size],
-      initializer = tf.random_normal_initializer(stddev=1 / math.sqrt(feature_size)))
-    tf.summary.histogram("cluster_weights", cluster_weights)
-    activation = tf.matmul(reshaped_input, cluster_weights)
-    if add_batch_norm:
-      activation = slim.batch_norm(
-          activation,
-          center=True,
-          scale=True,
-          is_training=is_training,
-          scope="cluster_bn")
-    else:
-      cluster_biases = tf.get_variable("cluster_biases",
-        [cluster_size],
-        initializer = tf.random_normal(stddev=1 / math.sqrt(feature_size)))
-      tf.summary.histogram("cluster_biases", cluster_biases)
-      activation += cluster_biases
-    activation = tf.nn.relu6(activation)
-    tf.summary.histogram("cluster_output", activation)
+flags.DEFINE_float("fv_coupling_factor", 0.01,
+                   "Coupling factor")
 
-    activation = tf.reshape(activation, [-1, max_frames, cluster_size])
-    activation = utils.FramePooling(activation, FLAGS.dbof_pooling_method)
+flags.DEFINE_integer("lstm_cells_video", 1024, "Number of LSTM cells (video).")
+flags.DEFINE_integer("lstm_cells_audio", 128, "Number of LSTM cells (audio).")
 
-    hidden1_weights = tf.get_variable("hidden1_weights",
-      [cluster_size, hidden1_size],
-      initializer=tf.random_normal_initializer(stddev=1 / math.sqrt(cluster_size)))
-    tf.summary.histogram("hidden1_weights", hidden1_weights)
-    activation = tf.matmul(activation, hidden1_weights)
-    if add_batch_norm:
-      activation = slim.batch_norm(
-          activation,
-          center=True,
-          scale=True,
-          is_training=is_training,
-          scope="hidden1_bn")
-    else:
-      hidden1_biases = tf.get_variable("hidden1_biases",
-        [hidden1_size],
-        initializer = tf.random_normal_initializer(stddev=0.01))
-      tf.summary.histogram("hidden1_biases", hidden1_biases)
-      activation += hidden1_biases
-    activation = tf.nn.relu6(activation)
-    tf.summary.histogram("hidden1_output", activation)
+flags.DEFINE_integer("gru_cells", 1024, "Number of GRU cells.")
+flags.DEFINE_integer("gru_cells_video", 1024, "Number of GRU cells (video).")
+flags.DEFINE_integer("gru_cells_audio", 128, "Number of GRU cells (audio).")
+flags.DEFINE_integer("gru_layers", 2, "Number of GRU layers.")
+flags.DEFINE_bool("lstm_random_sequence", False,
+                  "Random sequence input for lstm.")
+flags.DEFINE_bool("gru_random_sequence", False,
+                  "Random sequence input for gru.")
+flags.DEFINE_bool("gru_backward", False, "BW reading for GRU")
+flags.DEFINE_bool("lstm_backward", False, "BW reading for LSTM")
 
-    aggregated_model = getattr(video_level_models,
-                               FLAGS.video_level_classifier_model)
-    return aggregated_model().create_model(
-        model_input=activation,
-        vocab_size=vocab_size,
-        **unused_params)
+flags.DEFINE_bool("fc_dimred", True, "Adding FC dimred after pooling")
 
-class LstmModel(models.BaseModel):
+# class DbofModel(models.BaseModel):
+#   """Creates a Deep Bag of Frames model.
+#
+#   The model projects the features for each frame into a higher dimensional
+#   'clustering' space, pools across frames in that space, and then
+#   uses a configurable video-level model to classify the now aggregated features.
+#
+#   The model will randomly sample either frames or sequences of frames during
+#   training to speed up convergence.
+#
+#   Args:
+#     model_input: A 'batch_size' x 'max_frames' x 'num_features' matrix of
+#                  input features.
+#     vocab_size: The number of classes in the dataset.
+#     num_frames: A vector of length 'batch' which indicates the number of
+#          frames for each video (before padding).
+#
+#   Returns:
+#     A dictionary with a tensor containing the probability predictions of the
+#     model in the 'predictions' key. The dimensions of the tensor are
+#     'batch_size' x 'num_classes'.
+#   """
+#
+#   def create_model(self,
+#                    model_input,
+#                    vocab_size,
+#                    num_frames,
+#                    iterations=None,
+#                    add_batch_norm=None,
+#                    sample_random_frames=None,
+#                    cluster_size=None,
+#                    hidden_size=None,
+#                    is_training=True,
+#                    **unused_params):
+#     iterations = iterations or FLAGS.iterations
+#     add_batch_norm = add_batch_norm or FLAGS.dbof_add_batch_norm
+#     random_frames = sample_random_frames or FLAGS.sample_random_frames
+#     cluster_size = cluster_size or FLAGS.dbof_cluster_size
+#     hidden1_size = hidden_size or FLAGS.dbof_hidden_size
+#
+#     num_frames = tf.cast(tf.expand_dims(num_frames, 1), tf.float32)
+#     if random_frames:
+#       model_input = utils.SampleRandomFrames(model_input, num_frames,
+#                                              iterations)
+#     else:
+#       model_input = utils.SampleRandomSequence(model_input, num_frames,
+#                                                iterations)
+#     max_frames = model_input.get_shape().as_list()[1]
+#     feature_size = model_input.get_shape().as_list()[2]
+#     reshaped_input = tf.reshape(model_input, [-1, feature_size])
+#     tf.summary.histogram("input_hist", reshaped_input)
+#
+#     if add_batch_norm:
+#       reshaped_input = slim.batch_norm(
+#           reshaped_input,
+#           center=True,
+#           scale=True,
+#           is_training=is_training,
+#           scope="input_bn")
+#
+#     cluster_weights = tf.get_variable("cluster_weights",
+#       [feature_size, cluster_size],
+#       initializer = tf.random_normal_initializer(stddev=1 / math.sqrt(feature_size)))
+#     tf.summary.histogram("cluster_weights", cluster_weights)
+#     activation = tf.matmul(reshaped_input, cluster_weights)
+#     if add_batch_norm:
+#       activation = slim.batch_norm(
+#           activation,
+#           center=True,
+#           scale=True,
+#           is_training=is_training,
+#           scope="cluster_bn")
+#     else:
+#       cluster_biases = tf.get_variable("cluster_biases",
+#         [cluster_size],
+#         initializer = tf.random_normal(stddev=1 / math.sqrt(feature_size)))
+#       tf.summary.histogram("cluster_biases", cluster_biases)
+#       activation += cluster_biases
+#     activation = tf.nn.relu6(activation)
+#     tf.summary.histogram("cluster_output", activation)
+#
+#     activation = tf.reshape(activation, [-1, max_frames, cluster_size])
+#     activation = utils.FramePooling(activation, FLAGS.dbof_pooling_method)
+#
+#     hidden1_weights = tf.get_variable("hidden1_weights",
+#       [cluster_size, hidden1_size],
+#       initializer=tf.random_normal_initializer(stddev=1 / math.sqrt(cluster_size)))
+#     tf.summary.histogram("hidden1_weights", hidden1_weights)
+#     activation = tf.matmul(activation, hidden1_weights)
+#     if add_batch_norm:
+#       activation = slim.batch_norm(
+#           activation,
+#           center=True,
+#           scale=True,
+#           is_training=is_training,
+#           scope="hidden1_bn")
+#     else:
+#       hidden1_biases = tf.get_variable("hidden1_biases",
+#         [hidden1_size],
+#         initializer = tf.random_normal_initializer(stddev=0.01))
+#       tf.summary.histogram("hidden1_biases", hidden1_biases)
+#       activation += hidden1_biases
+#     activation = tf.nn.relu6(activation)
+#     tf.summary.histogram("hidden1_output", activation)
+#
+#     aggregated_model = getattr(video_level_models,
+#                                FLAGS.video_level_classifier_model)
+#     return aggregated_model().create_model(
+#         model_input=activation,
+#         vocab_size=vocab_size,
+#         **unused_params)
+#
+# class LstmModel(models.BaseModel):
+#
+#   def create_model(self, model_input, vocab_size, num_frames, **unused_params):
+#     """Creates a model which uses a stack of LSTMs to represent the video.
+#
+#     Args:
+#       model_input: A 'batch_size' x 'max_frames' x 'num_features' matrix of
+#                    input features.
+#       vocab_size: The number of classes in the dataset.
+#       num_frames: A vector of length 'batch' which indicates the number of
+#            frames for each video (before padding).
+#
+#     Returns:
+#       A dictionary with a tensor containing the probability predictions of the
+#       model in the 'predictions' key. The dimensions of the tensor are
+#       'batch_size' x 'num_classes'.
+#     """
+#     lstm_size = FLAGS.lstm_cells
+#     number_of_layers = FLAGS.lstm_layers
+#
+#     stacked_lstm = tf.contrib.rnn.MultiRNNCell(
+#             [
+#                 tf.contrib.rnn.BasicLSTMCell(
+#                     lstm_size, forget_bias=1.0)
+#                 for _ in range(number_of_layers)
+#                 ])
+#
+#     loss = 0.0
+#
+#     outputs, state = tf.nn.dynamic_rnn(stacked_lstm, model_input,
+#                                        sequence_length=num_frames,
+#                                        dtype=tf.float32)
+#
+#     aggregated_model = getattr(video_level_models,
+#                                FLAGS.video_level_classifier_model)
+#
+#     return aggregated_model().create_model(
+#         model_input=state[-1].h,
+#         vocab_size=vocab_size,
+#         **unused_params)
 
-  def create_model(self, model_input, vocab_size, num_frames, **unused_params):
-    """Creates a model which uses a stack of LSTMs to represent the video.
-
-    Args:
-      model_input: A 'batch_size' x 'max_frames' x 'num_features' matrix of
-                   input features.
-      vocab_size: The number of classes in the dataset.
-      num_frames: A vector of length 'batch' which indicates the number of
-           frames for each video (before padding).
-
-    Returns:
-      A dictionary with a tensor containing the probability predictions of the
-      model in the 'predictions' key. The dimensions of the tensor are
-      'batch_size' x 'num_classes'.
-    """
-    lstm_size = FLAGS.lstm_cells
-    number_of_layers = FLAGS.lstm_layers
-
-    stacked_lstm = tf.contrib.rnn.MultiRNNCell(
-            [
-                tf.contrib.rnn.BasicLSTMCell(
-                    lstm_size, forget_bias=1.0)
-                for _ in range(number_of_layers)
-                ])
-
-    loss = 0.0
-
-    outputs, state = tf.nn.dynamic_rnn(stacked_lstm, model_input,
-                                       sequence_length=num_frames,
-                                       dtype=tf.float32)
-
-    aggregated_model = getattr(video_level_models,
-                               FLAGS.video_level_classifier_model)
-
-    return aggregated_model().create_model(
-        model_input=state[-1].h,
-        vocab_size=vocab_size,
-        **unused_params)
