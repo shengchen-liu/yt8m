@@ -27,6 +27,7 @@ import feature_transform
 import readers
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
+from tensorflow.python.lib.io import file_io
 from tensorflow import app
 from tensorflow import flags
 from tensorflow import gfile
@@ -321,8 +322,8 @@ def build_graph(reader,
       p = FLAGS.distillation_percent
       print "distillation_percent =", p, "reforming labels"
       float_labels = tf.cast(labels_batch, dtype=tf.float32)
-      sum_float_labels = tf.reduce_sum(float_labels, axis=1, keep_dims=True)
-      sum_distill_labels = tf.reduce_sum(distill_labels_batch, axis=1, keep_dims=True) + 1e-6
+      sum_float_labels = tf.reduce_sum(float_labels, axis=1, keepdims =True)
+      sum_distill_labels = tf.reduce_sum(distill_labels_batch, axis=1, keepdims=True) + 1e-6
       distill_labels_batch = float_labels + distill_labels_batch * (sum_float_labels / sum_distill_labels * p)
       distill_labels_batch = tf.clip_by_value(distill_labels_batch, clip_value_min=0.0, clip_value_max=1.0)
   else:
@@ -509,6 +510,33 @@ class Trainer(object):
     """
     if self.is_master and start_new_model:
       self.remove_training_directory(self.train_dir)
+
+    if not os.path.exists(self.train_dir):
+        os.makedirs(self.train_dir)
+
+    model_flags_dict = {
+        "model": FLAGS.model,
+        "feature_sizes": FLAGS.feature_sizes,
+        "feature_names": FLAGS.feature_names,
+        "frame_features": FLAGS.frame_features,
+        "label_loss": FLAGS.label_loss,
+    }
+    flags_json_path = os.path.join(FLAGS.train_dir, "model_flags.json")
+    if file_io.file_exists(flags_json_path):
+        existing_flags = json.load(file_io.FileIO(flags_json_path, mode="r"))
+        if existing_flags != model_flags_dict:
+            logging.error("Model flags do not match existing file %s. Please "
+                          "delete the file, change --train_dir, or pass flag "
+                          "--start_new_model",
+                          flags_json_path)
+            logging.error("Ran model with flags: %s", str(model_flags_dict))
+            logging.error("Previously ran with flags: %s", str(existing_flags))
+            exit(1)
+    else:
+        # Write the file.
+        with file_io.FileIO(flags_json_path, mode="w") as fout:
+            fout.write(json.dumps(model_flags_dict))
+
 
     target, device_fn = self.start_server_if_distributed()
 

@@ -19,6 +19,8 @@ import numpy as np
 
 FLAGS = flags.FLAGS
 
+# print('netVLAD')
+
 class LightVLAD():
     def __init__(self, feature_size, max_frames, cluster_size, add_batch_norm, is_training):
         self.feature_size = feature_size
@@ -107,7 +109,7 @@ class NetVLAD():
 
         activation = tf.reshape(activation, [-1, self.max_frames, self.cluster_size])
 
-        a_sum = tf.reduce_sum(activation, -2, keep_dims=True)
+        a_sum = tf.reduce_sum(activation, -2, keepdims =True)
 
         cluster_weights2 = tf.get_variable("cluster_weights2",
                                            [1, self.feature_size, self.cluster_size],
@@ -434,7 +436,7 @@ class NetFV():
 
         activation = tf.reshape(activation, [-1, self.max_frames, self.cluster_size])
 
-        a_sum = tf.reduce_sum(activation, -2, keep_dims=True)
+        a_sum = tf.reduce_sum(activation, -2, keepdims=True)
 
         if not FLAGS.fv_couple_weights:
             cluster_weights2 = tf.get_variable("cluster_weights2",
@@ -496,7 +498,7 @@ class NetVLADModelLF(models.BaseModel):
       model in the 'predictions' key. The dimensions of the tensor are
       'batch_size' x 'num_classes'.
     """
-
+    # print('found!')
     def create_model(self,
                      model_input,
                      vocab_size,
@@ -645,7 +647,6 @@ class DbofModelLF(models.BaseModel):
       model in the 'predictions' key. The dimensions of the tensor are
       'batch_size' x 'num_classes'.
     """
-
     def create_model(self,
                      model_input,
                      vocab_size,

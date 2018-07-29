@@ -19,9 +19,9 @@ import tensorflow as tf
 from tensorflow import flags
 
 FLAGS = flags.FLAGS
-flags.DEFINE_float("false_negative_punishment", 1.0, 
+flags.DEFINE_float("false_negative_punishment", 1.0,
                    "punishment constant to 1 classified to 0")
-flags.DEFINE_float("false_positive_punishment", 1.0, 
+flags.DEFINE_float("false_positive_punishment", 1.0,
                    "punishment constant to 0 classified to 1")
 flags.DEFINE_integer("num_classes", 4716,
                    "number of classes")
@@ -241,7 +241,7 @@ class MultiTaskLoss(BaseLoss):
             x, y = group
             vertical_mapping[x, y] = 1
       vm_init = tf.constant_initializer(vertical_mapping)
-      vm = tf.get_variable("vm", shape = [num_classes, num_verticals], 
+      vm = tf.get_variable("vm", shape = [num_classes, num_verticals],
                            trainable=False, initializer=vm_init)
       vertical_labels = tf.matmul(float_labels, vm)
       return tf.cast(vertical_labels > 0.2, tf.float32)
@@ -291,7 +291,7 @@ class BatchAgreementCrossEntropyLoss(BaseLoss):
       cross_entropy_loss = float_labels * tf.log(predictions + epsilon) + (
           1 - float_labels) * tf.log(1 - predictions + epsilon)
       cross_entropy_loss = tf.negative(cross_entropy_loss)
-      
+
       positive_predictions = predictions * float_labels + 1.0 - float_labels
       min_pp = tf.reduce_min(positive_predictions)
 
@@ -314,7 +314,7 @@ class BatchAgreementCrossEntropyLoss(BaseLoss):
       weight_fn = tf.nn.sigmoid((center_fp - predictions) / false_range * 3.0) * (num_fp / float_batch_size) * false_negatives
       # for 0s that grow over 1s
       weight_fp = tf.nn.sigmoid((predictions - center_fn) / false_range * 3.0) * (num_fn / float_batch_size) * false_positives
-      
+
       weight = (weight_fn + weight_fp) * batch_agreement + 1.0
       print weight
       return tf.reduce_mean(tf.reduce_sum(weight * cross_entropy_loss, 1))
@@ -336,7 +336,7 @@ class TopKBatchAgreementCrossEntropyLoss(BaseLoss):
       cross_entropy_loss = float_labels * tf.log(predictions + epsilon) + (
           1 - float_labels) * tf.log(1 - predictions + epsilon)
       cross_entropy_loss = tf.negative(cross_entropy_loss)
-      
+
       # minimum positive predictions in topk
       positive_predictions = (predictions * float_labels * topk_mask) + 1.0 - (float_labels * topk_mask)
       min_pp = tf.reduce_min(positive_predictions)
@@ -359,7 +359,7 @@ class MultiTaskDivergenceCrossEntropyLoss(MultiTaskLoss):
   """Calculate the loss between the predictions and labels.
   """
   def calculate_loss(self, predictions, support_predictions, labels, **unused_params):
-    """ 
+    """
     support_predictions batch_size x num_models x num_classes
     predictions = tf.reduce_mean(support_predictions, axis=1)
     """
@@ -387,7 +387,7 @@ class MultiTaskDivergenceCrossEntropyAndMSELoss(MultiTaskLoss):
   """Calculate the loss between the predictions and labels.
   """
   def calculate_loss(self, predictions, support_predictions, labels, **unused_params):
-    """ 
+    """
     support_predictions batch_size x num_models x num_classes
     predictions = tf.reduce_mean(support_predictions, axis=1)
     """
@@ -412,4 +412,6 @@ class MultiTaskDivergenceCrossEntropyAndMSELoss(MultiTaskLoss):
 
     loss = cross_entropy_loss * (1.0 - FLAGS.support_loss_percent) - divergence * FLAGS.support_loss_percent
     return loss
+
+
 

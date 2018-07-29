@@ -16,6 +16,7 @@
 """
 
 import sys
+from tensorflow import flags
 from os.path import dirname
 if dirname(__file__) not in sys.path:
   sys.path.append(dirname(__file__))
