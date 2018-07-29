@@ -141,7 +141,10 @@ def inference(reader, train_dir, data_pattern, out_file_location, batch_size, to
       saver = tf.train.import_meta_graph(meta_graph_location, clear_devices=True)
     logging.info("restoring variables from " + checkpoint_file)
     saver.restore(sess, checkpoint_file)
+
     input_tensor = tf.get_collection("input_batch_raw")[0]
+    # input_tensor = tf.get_collection("input_batch")[0]
+
     num_frames_tensor = tf.get_collection("num_frames")[0]
     predictions_tensor = tf.get_collection("predictions")[0]
 

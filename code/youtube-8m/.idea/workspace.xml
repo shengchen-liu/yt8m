@@ -14,8 +14,8 @@
       <file leaf-file-name="train.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="134">
-              <caret line="110" column="33" lean-forward="false" selection-start-line="110" selection-start-column="31" selection-end-line="110" selection-end-column="33" />
+            <state relative-caret-position="104">
+              <caret line="108" column="19" lean-forward="false" selection-start-line="108" selection-start-column="19" selection-end-line="108" selection-end-column="19" />
               <folding>
                 <element signature="e#669#680#0" expanded="true" />
               </folding>
@@ -23,14 +23,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="video_level_models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/video_level_models.py">
+      <file leaf-file-name="inference.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/inference.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="63" lean-forward="false" selection-start-line="9" selection-start-column="63" selection-end-line="9" selection-end-column="63" />
-              <folding>
-                <element signature="e#634#645#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="359">
+              <caret line="72" column="17" lean-forward="false" selection-start-line="72" selection-start-column="7" selection-end-line="72" selection-end-column="17" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -38,8 +36,30 @@
       <file leaf-file-name="moe_model.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/all_video_models/moe_model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="675">
-              <caret line="51" column="0" lean-forward="false" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+            <state relative-caret-position="164">
+              <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="eval.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/eval.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3415">
+              <caret line="230" column="64" lean-forward="true" selection-start-line="230" selection-start-column="64" selection-end-line="230" selection-end-column="64" />
+              <folding>
+                <element signature="e#671#682#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/tensorflow/.env2/lib/python2.7/site-packages/tensorflow/python/platform/app.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="302">
+              <caret line="125" column="0" lean-forward="false" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -48,32 +68,8 @@
       <file leaf-file-name="netVLAD.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/all_frame_models/netVLAD.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="28" column="27" lean-forward="false" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="27" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="eval.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/eval.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="411" column="22" lean-forward="false" selection-start-line="411" selection-start-column="22" selection-end-line="411" selection-end-column="22" />
-              <folding>
-                <element signature="e#671#682#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="frame_level_models.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/frame_level_models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="94" column="41" lean-forward="false" selection-start-line="94" selection-start-column="31" selection-end-line="94" selection-end-column="41" />
+            <state relative-caret-position="30">
+              <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -90,14 +86,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>video_id_batch</find>
-      <find>eval_once</find>
-      <find>video_idr</find>
-      <find>contexts[&quot;id</find>
-      <find>video_id</find>
-      <find>&quot;id&quot;</find>
-      <find>get_latest_checkpoint</find>
-      <find>get_lates</find>
       <find>top_k</find>
       <find>istr</find>
       <find>is_</find>
@@ -117,9 +105,17 @@
       <find>is_training</find>
       <find>num</find>
       <find>mixtures</find>
-      <find>num_mixtures</find>
-      <find>batch_</find>
       <find>batch_norm</find>
+      <find>batch_</find>
+      <find>num_mixtures</find>
+      <find>input_batch_raw</find>
+      <find>model_input</find>
+      <find>build_graph</find>
+      <find>input_tensor</find>
+      <find>MODEL_INPUT_RAW</find>
+      <find>train_input</find>
+      <find>train_dir</find>
+      <find>infere</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -137,15 +133,17 @@
         <option value="$PROJECT_DIR$/all_frame_models/__init__.py" />
         <option value="$PROJECT_DIR$/frame_level_models.py" />
         <option value="$PROJECT_DIR$/losses.py" />
-        <option value="$PROJECT_DIR$/eval.py" />
         <option value="$PROJECT_DIR$/train.py" />
+        <option value="$PROJECT_DIR$/inference.py" />
+        <option value="$PROJECT_DIR$/eval.py" />
         <option value="$PROJECT_DIR$/all_frame_models/netVLAD.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="width" value="1440" />
-    <option name="height" value="900" />
+    <option name="y" value="23" />
+    <option name="width" value="1391" />
+    <option name="height" value="877" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -200,7 +198,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.eval">
+  <component name="RunManager" selected="Python.inference">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -232,7 +230,25 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="youtube-8m" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/eval.py" />
-      <option name="PARAMETERS" value="--eval_data_pattern=$USER_HOME$/yt8m/v2/frame/validate*.tfrecord \ --frame_features=True \ --model=NetVLADModelLF \ --train_dir=yt8m_train_local/all/gatednetvladLF-256k-1024-80-0002-300iter-norelu-basic-gatedmoe \ --feature_names=&quot;rgb,audio&quot; \ --feature_sizes=&quot;1024,128&quot; \ --batch_size=80 \ --base_learning_rate=0.0002 \ --learning_rate_decay=0.8 \ --netvlad_cluster_size=256 \ --netvlad_hidden_size=1024 \ --moe_l2=1e-6 \ --iterations=300 \ --netvlad_relu=False \ --gating=True \ --moe_prob_gating=True \ --is_training=False \ --moe_num_mixtures=2" />
+      <option name="PARAMETERS" value="--eval_data_pattern=$USER_HOME$/yt8m/v2/frame/validate*.tfrecord \ --frame_features=True \ --model=NetVLADModelLF \ --train_dir=$PROJECT_DIR$/../yt8m_train_local/all/gatednetvladLF-256k-1024-80-0002-300iter-norelu-basic-gatedmoe/ --feature_names=&quot;rgb,audio&quot; \ --feature_sizes=&quot;1024,128&quot; \ --batch_size=80 \ --base_learning_rate=0.0002 \ --learning_rate_decay=0.8 \ --netvlad_cluster_size=256 \ --netvlad_hidden_size=1024 \ --moe_l2=1e-6 \ --iterations=300 \ --netvlad_relu=False \ --gating=True \ --moe_prob_gating=True \ --is_training=False \ --moe_num_mixtures=2" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="inference" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="youtube-8m" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/inference.py" />
+      <option name="PARAMETERS" value="--input_data_pattern=$USER_HOME$/yt8m/v2/frame/test*.tfrecord \ --train_dir=$PROJECT_DIR$/../yt8m_train_local/all/gatednetvladLF-256k-1024-80-0002-300iter-norelu-basic-gatedmoe \ --batch_size=1024 \ --num_readers=8 \ --output_file=$PROJECT_DIR$/../yt8m_train_local/all/gatednetvladLF-256k-1024-80-0002-300iter-norelu-basic-gatedmoe/predictions_gatedlightvladLF-256k-1024-80-0002-300iter-norelu-basic-gatedmoe.csv" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -255,14 +271,16 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Python.train" />
       <item index="1" class="java.lang.String" itemvalue="Python.eval" />
+      <item index="2" class="java.lang.String" itemvalue="Python.inference" />
     </list>
     <recent_temporary>
-      <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="Python.eval" />
-        <item index="1" class="java.lang.String" itemvalue="Python.train" />
+      <list size="3">
+        <item index="0" class="java.lang.String" itemvalue="Python.inference" />
+        <item index="1" class="java.lang.String" itemvalue="Python.eval" />
+        <item index="2" class="java.lang.String" itemvalue="Python.train" />
       </list>
     </recent_temporary>
   </component>
@@ -296,13 +314,13 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24031007" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37340152" sideWeight="0.5058394" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32769045" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24947146" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35308343" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39903265" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35308343" sideWeight="0.4941606" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39782345" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -348,11 +366,6 @@
           <line>18</line>
           <option name="timeStamp" value="26" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/all_video_models/moe_model.py</url>
-          <line>51</line>
-          <option name="timeStamp" value="27" />
-        </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
@@ -361,21 +374,11 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="28" />
+      <option name="time" value="31" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/video_level_models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="50" column="18" lean-forward="false" selection-start-line="50" selection-start-column="18" selection-end-line="50" selection-end-column="18" />
-          <folding>
-            <element signature="e#634#645#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/frame_level_models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4110">
@@ -474,7 +477,7 @@
         <state relative-caret-position="915">
           <caret line="68" column="24" lean-forward="false" selection-start-line="68" selection-start-column="24" selection-end-line="68" selection-end-column="24" />
           <folding>
-            <element signature="e#634#645#0" expanded="true" />
+            <element signature="e#634#645#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -598,13 +601,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/tensorflow/.env2/lib/python2.7/site-packages/tensorflow/python/platform/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="125" column="0" lean-forward="false" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/all_video_models/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -662,13 +658,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/inference.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="138" column="45" lean-forward="false" selection-start-line="138" selection-start-column="45" selection-end-line="138" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/readers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="196">
@@ -693,30 +682,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train.py">
+    <entry file="file://$PROJECT_DIR$/frame_level_models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="110" column="33" lean-forward="false" selection-start-line="110" selection-start-column="31" selection-end-line="110" selection-end-column="33" />
-          <folding>
-            <element signature="e#669#680#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/all_frame_models/netVLAD.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" column="27" lean-forward="false" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/all_video_models/moe_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="51" column="0" lean-forward="false" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+        <state relative-caret-position="152">
+          <caret line="94" column="41" lean-forward="false" selection-start-line="94" selection-start-column="31" selection-end-line="94" selection-end-column="41" />
           <folding />
         </state>
       </provider>
@@ -726,25 +695,67 @@
         <state relative-caret-position="135">
           <caret line="9" column="63" lean-forward="false" selection-start-line="9" selection-start-column="63" selection-end-line="9" selection-end-column="63" />
           <folding>
-            <element signature="e#634#645#0" expanded="true" />
+            <element signature="e#634#645#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="108" column="19" lean-forward="false" selection-start-line="108" selection-start-column="19" selection-end-line="108" selection-end-column="19" />
+          <folding>
+            <element signature="e#669#680#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/tensorflow/.env2/lib/python2.7/site-packages/tensorflow/python/framework/ops.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="5880" column="0" lean-forward="false" selection-start-line="5880" selection-start-column="0" selection-end-line="5880" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/all_video_models/moe_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/tensorflow/.env2/lib/python2.7/site-packages/tensorflow/python/platform/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="125" column="0" lean-forward="false" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/eval.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="411" column="22" lean-forward="false" selection-start-line="411" selection-start-column="22" selection-end-line="411" selection-end-column="22" />
+        <state relative-caret-position="3415">
+          <caret line="230" column="64" lean-forward="true" selection-start-line="230" selection-start-column="64" selection-end-line="230" selection-end-column="64" />
           <folding>
             <element signature="e#671#682#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frame_level_models.py">
+    <entry file="file://$PROJECT_DIR$/all_frame_models/netVLAD.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="94" column="41" lean-forward="false" selection-start-line="94" selection-start-column="31" selection-end-line="94" selection-end-column="41" />
+        <state relative-caret-position="30">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/inference.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="359">
+          <caret line="72" column="17" lean-forward="false" selection-start-line="72" selection-start-column="7" selection-end-line="72" selection-end-column="17" />
           <folding />
         </state>
       </provider>

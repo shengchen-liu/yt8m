@@ -137,7 +137,8 @@ def build_graph(reader,
   """
 
   global_step = tf.Variable(0, trainable=False, name="global_step")
-  video_id_batch, model_input_raw, labels_batch, num_frames = get_input_evaluation_tensors(  # pylint: disable=g-line-too-long
+  video_id_batch, model_input_raw, labels_batch, num_frames = get_input_evaluation_tensors(
+      # pylint: disable=g-line-too-long
       reader,
       eval_data_pattern,
       batch_size=batch_size,
@@ -150,22 +151,24 @@ def build_graph(reader,
   model_input = tf.nn.l2_normalize(model_input_raw, feature_dim)
 
   with tf.name_scope("model"):
-    result = model.create_model(model_input,
-                                num_frames=num_frames,
-                                vocab_size=reader.num_classes,
-                                labels=labels_batch,
-                                is_training=False)
-    predictions = result["predictions"]
-    tf.summary.histogram("model_activations", predictions)
-    if "loss" in result.keys():
-      label_loss = result["loss"]
-    else:
-      label_loss = label_loss_fn.calculate_loss(predictions, labels_batch)
+      result = model.create_model(model_input,
+                                  num_frames=num_frames,
+                                  vocab_size=reader.num_classes,
+                                  labels=labels_batch,
+                                  is_training=False)
+      predictions = result["predictions"]
+      tf.summary.histogram("model_activations", predictions)
+      if "loss" in result.keys():
+          label_loss = result["loss"]
+      else:
+          label_loss = label_loss_fn.calculate_loss(predictions, labels_batch)
+
 
   tf.add_to_collection("global_step", global_step)
   tf.add_to_collection("loss", label_loss)
   tf.add_to_collection("predictions", predictions)
   tf.add_to_collection("input_batch", model_input)
+  tf.add_to_collection("input_batch_raw", model_input_raw)
   tf.add_to_collection("video_id_batch", video_id_batch)
   tf.add_to_collection("num_frames", num_frames)
   tf.add_to_collection("labels", tf.cast(labels_batch, tf.float32))
