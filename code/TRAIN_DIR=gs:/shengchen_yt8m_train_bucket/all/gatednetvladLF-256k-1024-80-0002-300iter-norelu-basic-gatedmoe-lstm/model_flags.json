@@ -1,0 +1,1 @@
+{"model": "NetVLADModelLF_LSTM", "feature_sizes": "1024,128", "frame_features": true, "feature_names": "rgb,audio", "label_loss": "CrossEntropyLoss"}

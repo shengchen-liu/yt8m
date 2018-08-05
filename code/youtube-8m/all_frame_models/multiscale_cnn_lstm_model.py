@@ -131,6 +131,7 @@ class MultiscaleCnnLstmModel(models.BaseModel):
       num_frames = tf.maximum(num_frames/pool_size, 1)
 
     support_predictions = tf.concat(sub_predictions, axis=1)
+    # classifer consensus
     predictions = tf.add_n(sub_predictions) / len(sub_predictions)
 
     return {"predictions": predictions, 

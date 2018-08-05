@@ -1,20 +1,19 @@
 import math
 
-from .. import models
+# from .. import models
 from .. import video_level_models
-import tensorflow as tf
-from .. import model_utils as utils
-
-# import models
-# import video_level_models
 # import tensorflow as tf
-# import model_utils as utils
+# from .. import model_utils as utils
 
-
-import tensorflow.contrib.slim as slim
+import models
+# import video_level_models
+import model_utils as utils
+import tensorflow as tf
 from tensorflow import flags
+import tensorflow.contrib.slim as slim
+FLAGS = flags.FLAGS
 
-import scipy.io as sio
+
 import numpy as np
 
 FLAGS = flags.FLAGS
@@ -1130,6 +1129,413 @@ class NetFVModelLF(models.BaseModel):
             gates = tf.sigmoid(gates)
 
             activation = tf.multiply(activation, gates)
+
+        aggregated_model = getattr(video_level_models,
+                                   FLAGS.video_level_classifier_model)
+
+        return aggregated_model().create_model(
+            model_input=activation,
+            vocab_size=vocab_size,
+            is_training=is_training,
+            **unused_params)
+
+
+class NetVLADModelLF_LSTM(models.BaseModel):
+    """Creates a NetVLAD based model.
+
+    Args:
+      model_input: A 'batch_size' x 'max_frames' x 'num_features' matrix of
+                   input features.
+      vocab_size: The number of classes in the dataset.
+      num_frames: A vector of length 'batch' which indicates the number of
+           frames for each video (before padding).
+
+    Returns:
+      A dictionary with a tensor containing the probability predictions of the
+      model in the 'predictions' key. The dimensions of the tensor are
+      'batch_size' x 'num_classes'.
+    """
+    # print('found!')
+
+    def create_model(self,
+                     model_input,
+                     vocab_size,
+                     num_frames,
+                     iterations=None,
+                     add_batch_norm=None,
+                     sample_random_frames=None,
+                     cluster_size=None,
+                     hidden_size=None,
+                     is_training=True,
+                     **unused_params):
+        iterations = iterations or FLAGS.iterations
+        add_batch_norm = add_batch_norm or FLAGS.netvlad_add_batch_norm
+        random_frames = sample_random_frames or FLAGS.sample_random_frames
+        cluster_size = cluster_size or FLAGS.netvlad_cluster_size
+        hidden1_size = hidden_size or FLAGS.netvlad_hidden_size
+        relu = FLAGS.netvlad_relu
+        dimred = FLAGS.netvlad_dimred
+        gating = FLAGS.gating
+        remove_diag = FLAGS.gating_remove_diag
+        lightvlad = FLAGS.lightvlad
+        vlagd = FLAGS.vlagd
+
+        num_frames_original = num_frames
+        num_frames = tf.cast(tf.expand_dims(num_frames, 1), tf.float32)
+        if random_frames:
+            model_input_video = utils.SampleRandomFrames(model_input[:, :, 0:1024], num_frames,
+                                                   iterations)
+        else:
+            model_input_video = utils.SampleRandomSequence(model_input[:, :, 0:1024], num_frames,
+                                                     iterations)
+
+        max_frames = model_input.get_shape().as_list()[1]
+        feature_size = model_input_video.get_shape().as_list()[2]
+        reshaped_input = tf.reshape(model_input_video, [-1, feature_size])
+
+        if lightvlad:
+            video_NetVLAD = LightVLAD(1024, max_frames, cluster_size, add_batch_norm, is_training)
+            audio_NetVLAD = LightVLAD(128, max_frames, cluster_size / 2, add_batch_norm, is_training)
+        elif vlagd:
+            video_NetVLAD = NetVLAGD(1024, max_frames, cluster_size, add_batch_norm, is_training)
+            audio_NetVLAD = NetVLAGD(128, max_frames, cluster_size / 2, add_batch_norm, is_training)
+        else:
+            video_NetVLAD = NetVLAD(1024, max_frames, cluster_size, add_batch_norm, is_training)
+            # audio_NetVLAD = NetVLAD(128, max_frames, cluster_size / 2, add_batch_norm, is_training)
+
+        if add_batch_norm:  # and not lightvlad:
+            reshaped_input = slim.batch_norm(
+                reshaped_input,
+                center=True,
+                scale=True,
+                is_training=is_training,
+                scope="input_bn")
+
+        with tf.variable_scope("video_VLAD"):
+            vlad_video = video_NetVLAD.forward(reshaped_input[:, 0:1024])
+
+        # with tf.variable_scope("audio_VLAD"):
+        #     vlad_audio = audio_NetVLAD.forward(reshaped_input[:, 1024:])
+
+        vlad = vlad_video
+
+        vlad_dim = vlad.get_shape().as_list()[1]
+        hidden1_weights = tf.get_variable("hidden1_weights",
+                                          [vlad_dim, hidden1_size],
+                                          initializer=tf.random_normal_initializer(stddev=1 / math.sqrt(cluster_size)))
+
+        activation = tf.matmul(vlad, hidden1_weights)
+
+
+        if add_batch_norm and relu:
+            activation = slim.batch_norm(
+                activation,
+                center=True,
+                scale=True,
+                is_training=is_training,
+                scope="hidden1_bn")
+
+        else:
+            hidden1_biases = tf.get_variable("hidden1_biases",
+                                             [hidden1_size],
+                                             initializer=tf.random_normal_initializer(stddev=0.01))
+            tf.summary.histogram("hidden1_biases", hidden1_biases)
+            activation += hidden1_biases
+
+        if relu:
+            activation = tf.nn.relu6(activation)
+
+        if gating:
+            gating_weights = tf.get_variable("gating_weights_2",
+                                             [hidden1_size, hidden1_size],
+                                             initializer=tf.random_normal_initializer(
+                                                 stddev=1 / math.sqrt(hidden1_size)))
+
+            gates = tf.matmul(activation, gating_weights)
+
+            if remove_diag:
+                # removes diagonals coefficients
+                diagonals = tf.matrix_diag_part(gating_weights)
+                gates = gates - tf.multiply(diagonals, activation)
+
+            if add_batch_norm:
+                gates = slim.batch_norm(
+                    gates,
+                    center=True,
+                    scale=True,
+                    is_training=is_training,
+                    scope="gating_bn")
+            else:
+                gating_biases = tf.get_variable("gating_biases",
+                                                [cluster_size],
+                                                initializer=tf.random_normal(stddev=1 / math.sqrt(feature_size)))
+                gates += gating_biases
+
+            gates = tf.sigmoid(gates)
+
+            activation = tf.multiply(activation, gates)
+
+        # Audio LSTM .......................................................
+
+        lstm_size = FLAGS.lstm_cells_audio
+        number_of_layers = FLAGS.lstm_layers
+        random_frames = FLAGS.lstm_random_sequence
+        iterations = FLAGS.iterations
+        backward = FLAGS.lstm_backward
+
+        if random_frames:
+            num_frames_2 = tf.cast(tf.expand_dims(num_frames, 1), tf.float32)
+            model_input = utils.SampleRandomFrames(model_input[:, :, 1024:], num_frames_2,
+                                                   iterations)
+        if backward:
+            model_input = tf.reverse_sequence(model_input[:, :, 1024:], num_frames, seq_axis=1)
+
+        stacked_lstm = tf.contrib.rnn.MultiRNNCell(
+            [
+                tf.contrib.rnn.BasicLSTMCell(
+                    lstm_size, forget_bias=1.0, state_is_tuple=True)
+                for _ in range(number_of_layers)
+            ], state_is_tuple=True)
+
+
+        with tf.variable_scope("RNN-Audio"):
+            outputs, state = tf.nn.dynamic_rnn(stacked_lstm, model_input[:, :, 1024:],
+                                               sequence_length=num_frames_original,
+                                               dtype=tf.float32)
+
+
+        # Merge audio and video
+        activation = tf.concat([activation, state[-1].h], 1)
+
+        aggregated_model = getattr(video_level_models,
+                                   FLAGS.video_level_classifier_model)
+
+        return aggregated_model().create_model(
+            model_input=activation,
+            vocab_size=vocab_size,
+            is_training=is_training,
+            **unused_params)
+
+
+class NetVLADModelLF_CNN_LSTM(models.BaseModel):
+    """Creates a NetVLAD based model.
+
+    Args:
+      model_input: A 'batch_size' x 'max_frames' x 'num_features' matrix of
+                   input features.
+      vocab_size: The number of classes in the dataset.
+      num_frames: A vector of length 'batch' which indicates the number of
+           frames for each video (before padding).
+
+    Returns:
+      A dictionary with a tensor containing the probability predictions of the
+      model in the 'predictions' key. The dimensions of the tensor are
+      'batch_size' x 'num_classes'.
+    """
+
+    # print('found!')
+    def cnn(self,
+            model_input,
+            l2_penalty=1e-8,
+            num_filters=[1024, 1024, 1024],
+            filter_sizes=[1, 2, 3],
+            sub_scope="",
+            **unused_params):
+        max_frames = model_input.get_shape().as_list()[1]
+        num_features = model_input.get_shape().as_list()[2]
+
+        shift_inputs = []
+        for i in xrange(max(filter_sizes)):
+            if i == 0:
+                shift_inputs.append(model_input)
+            else:
+                shift_inputs.append(tf.pad(model_input, paddings=[[0, 0], [i, 0], [0, 0]])[:, :max_frames, :])
+
+        cnn_outputs = []
+        for nf, fs in zip(num_filters, filter_sizes):
+            sub_input = tf.concat(shift_inputs[:fs], axis=2)
+            sub_filter = tf.get_variable(sub_scope + "cnn-filter-len%d" % fs,
+                                         shape=[num_features * fs, nf], dtype=tf.float32,
+                                         initializer=tf.truncated_normal_initializer(mean=0.0, stddev=0.1),
+                                         regularizer=tf.contrib.layers.l2_regularizer(l2_penalty))
+            cnn_outputs.append(tf.einsum("ijk,kl->ijl", sub_input, sub_filter))
+
+        cnn_output = tf.concat(cnn_outputs, axis=2)
+        cnn_output = slim.batch_norm(
+            cnn_output,
+            center=True,
+            scale=True,
+            is_training=FLAGS.is_training,
+            scope=sub_scope + "cluster_bn")
+        return cnn_output
+
+    def rnn(self, model_input, lstm_size, num_frames,
+            sub_scope="", **unused_params):
+
+        cell = tf.contrib.rnn.BasicLSTMCell(lstm_size, forget_bias=1.0,
+                                            state_is_tuple=True)
+        with tf.variable_scope("RNN-" + sub_scope):
+            outputs, state = tf.nn.dynamic_rnn(cell, model_input,
+                                               sequence_length=num_frames,
+                                               swap_memory=True,
+                                               dtype=tf.float32)
+        # return final memory
+        return state.c
+
+    def create_model(self,
+                     model_input,
+                     vocab_size,
+                     num_frames,
+                     iterations=None,
+                     add_batch_norm=None,
+                     sample_random_frames=None,
+                     cluster_size=None,
+                     hidden_size=None,
+                     is_training=True,
+                     **unused_params):
+        iterations = iterations or FLAGS.iterations
+        add_batch_norm = add_batch_norm or FLAGS.netvlad_add_batch_norm
+        random_frames = sample_random_frames or FLAGS.sample_random_frames
+        cluster_size = cluster_size or FLAGS.netvlad_cluster_size
+        hidden1_size = hidden_size or FLAGS.netvlad_hidden_size
+        relu = FLAGS.netvlad_relu
+        dimred = FLAGS.netvlad_dimred
+        gating = FLAGS.gating
+        remove_diag = FLAGS.gating_remove_diag
+        lightvlad = FLAGS.lightvlad
+        vlagd = FLAGS.vlagd
+
+        num_frames_original = num_frames
+        num_frames = tf.cast(tf.expand_dims(num_frames, 1), tf.float32)
+        if random_frames:
+            model_input_video = utils.SampleRandomFrames(model_input[:, :, 0:1024], num_frames,
+                                                         iterations)
+        else:
+            model_input_video = utils.SampleRandomSequence(model_input[:, :, 0:1024], num_frames,
+                                                           iterations)
+
+        max_frames = model_input.get_shape().as_list()[1]
+        feature_size = model_input_video.get_shape().as_list()[2]
+        reshaped_input = tf.reshape(model_input_video, [-1, feature_size])
+
+        if lightvlad:
+            video_NetVLAD = LightVLAD(1024, max_frames, cluster_size, add_batch_norm, is_training)
+            audio_NetVLAD = LightVLAD(128, max_frames, cluster_size / 2, add_batch_norm, is_training)
+        elif vlagd:
+            video_NetVLAD = NetVLAGD(1024, max_frames, cluster_size, add_batch_norm, is_training)
+            audio_NetVLAD = NetVLAGD(128, max_frames, cluster_size / 2, add_batch_norm, is_training)
+        else:
+            video_NetVLAD = NetVLAD(1024, max_frames, cluster_size, add_batch_norm, is_training)
+            # audio_NetVLAD = NetVLAD(128, max_frames, cluster_size / 2, add_batch_norm, is_training)
+
+        if add_batch_norm:  # and not lightvlad:
+            reshaped_input = slim.batch_norm(
+                reshaped_input,
+                center=True,
+                scale=True,
+                is_training=is_training,
+                scope="input_bn")
+
+        with tf.variable_scope("video_VLAD"):
+            vlad_video = video_NetVLAD.forward(reshaped_input[:, 0:1024])
+
+        # with tf.variable_scope("audio_VLAD"):
+        #     vlad_audio = audio_NetVLAD.forward(reshaped_input[:, 1024:])
+
+        vlad = vlad_video
+
+        vlad_dim = vlad.get_shape().as_list()[1]
+        hidden1_weights = tf.get_variable("hidden1_weights",
+                                          [vlad_dim, hidden1_size],
+                                          initializer=tf.random_normal_initializer(stddev=1 / math.sqrt(cluster_size)))
+
+        activation = tf.matmul(vlad, hidden1_weights)
+
+        if add_batch_norm and relu:
+            activation = slim.batch_norm(
+                activation,
+                center=True,
+                scale=True,
+                is_training=is_training,
+                scope="hidden1_bn")
+
+        else:
+            hidden1_biases = tf.get_variable("hidden1_biases",
+                                             [hidden1_size],
+                                             initializer=tf.random_normal_initializer(stddev=0.01))
+            tf.summary.histogram("hidden1_biases", hidden1_biases)
+            activation += hidden1_biases
+
+        if relu:
+            activation = tf.nn.relu6(activation)
+
+        if gating:
+            gating_weights = tf.get_variable("gating_weights_2",
+                                             [hidden1_size, hidden1_size],
+                                             initializer=tf.random_normal_initializer(
+                                                 stddev=1 / math.sqrt(hidden1_size)))
+
+            gates = tf.matmul(activation, gating_weights)
+
+            if remove_diag:
+                # removes diagonals coefficients
+                diagonals = tf.matrix_diag_part(gating_weights)
+                gates = gates - tf.multiply(diagonals, activation)
+
+            if add_batch_norm:
+                gates = slim.batch_norm(
+                    gates,
+                    center=True,
+                    scale=True,
+                    is_training=is_training,
+                    scope="gating_bn")
+            else:
+                gating_biases = tf.get_variable("gating_biases",
+                                                [cluster_size],
+                                                initializer=tf.random_normal(stddev=1 / math.sqrt(feature_size)))
+                gates += gating_biases
+
+            gates = tf.sigmoid(gates)
+
+            activation = tf.multiply(activation, gates)
+
+        # Audio LSTM .......................................................
+        num_layers = FLAGS.multiscale_cnn_lstm_layers
+        lstm_size = FLAGS.lstm_cells_audio
+        pool_size = 2
+        num_filters = [256, 256, 512]
+        filter_sizes = [1, 2, 3]
+        features_size = sum(num_filters)
+        num_frames = num_frames_original
+        sub_lstms = []
+        cnn_input = model_input[:, :, 1024:]
+
+        cnn_max_frames = model_input.get_shape().as_list()[1]
+        with tf.variable_scope("Audio_CNN_LSTM"):
+            for layer in range(num_layers):
+                cnn_output = self.cnn(cnn_input, num_filters=num_filters, filter_sizes=filter_sizes,
+                                      sub_scope="cnn%d" % (layer + 1))
+                cnn_output_relu = tf.nn.relu(cnn_output)
+
+                lstm_memory = self.rnn(cnn_output_relu, lstm_size, num_frames, sub_scope="rnn%d" % (layer + 1))
+                # sub_prediction = self.moe(lstm_memory, vocab_size, scopename="moe%d"%(layer+1))
+                sub_lstms.append(lstm_memory)
+                # sub_lstms = tf.concat([sub_lstms,lstm_memory], axis=1)
+                cnn_max_frames /= pool_size
+                max_pooled_cnn_output = tf.reduce_max(
+                    tf.reshape(
+                        cnn_output_relu[:, :cnn_max_frames * 2, :],
+                        [-1, cnn_max_frames, pool_size, features_size]
+                    ), axis=2)
+
+                # for the next cnn layer
+                cnn_input = max_pooled_cnn_output
+                num_frames = tf.maximum(num_frames / pool_size, 1)
+
+            audio_lstms = tf.concat(sub_lstms, axis=1)
+
+        # Merge audio and video
+        activation = tf.concat([activation, audio_lstms], 1)
 
         aggregated_model = getattr(video_level_models,
                                    FLAGS.video_level_classifier_model)

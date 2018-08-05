@@ -1,14 +1,3 @@
-# CUDA_VISIBLE_DEVICES=0 python train.py \
-#     # --support_loss_percent=1.0 \
-#     --support_type="label,label,label,label" \
-#     --is_training=True \
-#     --batch_size=128 \
-#     --num_readers=4 \
-#     --num_epochs=5 \
-#     --base_learning_rate=0.001
-
-
-
 BUCKET_NAME=gs://${USER}_yt8m_train_bucket
 # BUCKET_NAME=gs://${USER}_yt8m_sample_bucket
 

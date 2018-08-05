@@ -22,6 +22,8 @@ import utils
 from tensorflow import flags
 import tensorflow.contrib.slim as slim
 
+from all_video_models import *
+
 FLAGS = flags.FLAGS
 flags.DEFINE_integer(
     "moe_num_mixtures", 4,
@@ -43,6 +45,6 @@ import sys
 from os.path import dirname
 if dirname(__file__) not in sys.path:
   sys.path.append(dirname(__file__))
-from all_video_models import *
+
 
 

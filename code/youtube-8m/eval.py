@@ -71,6 +71,10 @@ if __name__ == "__main__":
     flags.DEFINE_boolean("run_once", False, "Whether to run eval only once.")
     flags.DEFINE_integer("top_k", 20, "How many predictions to output per video.")
 
+    flags.DEFINE_bool(
+        "multitask", False,
+        "Whether to consider support_predictions")
+
 
 def find_class_by_name(name, modules):
     """Searches the provided modules for the named class and returns it."""
@@ -161,7 +165,12 @@ def build_graph(reader,
       if "loss" in result.keys():
           label_loss = result["loss"]
       else:
-          label_loss = label_loss_fn.calculate_loss(predictions, labels_batch)
+          if FLAGS.multitask:
+              support_predictions = result["support_predictions"]
+              label_loss = label_loss_fn.calculate_loss(predictions, support_predictions, labels_batch)
+          else:
+              label_loss = label_loss_fn.calculate_loss(predictions, labels_batch)
+
 
 
   tf.add_to_collection("global_step", global_step)

@@ -1,40 +1,25 @@
---train_data_pattern=/Users/shengchen/yt8m/v2/frame/validate*.tfrecord
+--train_data_pattern=/media/shengchen/Shengchen/yt8m/input/frame/train*.tfrecord
 \
 --frame_features=True
 \
---model=NetVLADModelLF
+--model=NetVLADModelLF_LSTM
 \
---train_dir=yt8m_train_local/all/gatednetvladLF-256k-1024-80-0002-300iter-norelu-basic-gatedmoe
+--train_dir=/media/shengchen/Shengchen/yt8m/yt8m_train_local/gatednetvladLF-256k-1024-80-0002-300iter-norelu-basic-gatedmoe-lstm 
 \
 --feature_names="rgb,audio"
 \
 --feature_sizes="1024,128"
 \
---batch_size=80
+--batch_size=1024
 \
---base_learning_rate=0.0002
-\
---learning_rate_decay=0.8
-\
---netvlad_cluster_size=256
-\
---netvlad_hidden_size=1024
-\
---moe_l2=1e-6
-\
---iterations=300
-\
---netvlad_relu=False
-\
---gating=True
-\
---moe_prob_gating=True
-\
---num_readers=4
-\
+--multiscale_cnn_lstm_layers=4 \
+--moe_num_mixtures=4 \
+--is_training=True \
+--base_learning_rate=0.001 \
+--num_readers=4 \
 --num_epochs=5 \
---moe_num_mixtures=2
-
+--verbosity=debug \
+--start_new_model=True \
 
 --train_data_pattern='gs://youtube8m-ml-us-east1/2/frame/train/train*.tfrecord' \
 --frame_features=True \

@@ -1,2 +1,3 @@
 from netVLAD import *
-from mulitiscale_cnn_gru_model import *
+# from multiscale_cnn_lstm_model import *
+from multiscale_cnn_netvlad import *

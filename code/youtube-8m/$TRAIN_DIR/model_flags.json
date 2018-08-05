@@ -1,0 +1,1 @@
+{"model": "LstmAudioModel", "feature_sizes": "128", "frame_features": true, "feature_names": "audio", "label_loss": "CrossEntropyLoss"}
