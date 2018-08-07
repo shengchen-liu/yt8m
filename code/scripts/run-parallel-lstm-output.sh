@@ -24,7 +24,7 @@ BUCKET_NAME=gs://${USER}_yt8m_train_bucket
 # Submit the training job.
 JOB_NAME=yt8m_train_$(date +%Y%m%d_%H%M%S)
 MODEL_NAME=LstmParallelFinaloutputModel
-TRAIN_DIR=$BUCKET_NAME/all/lstmparallelfinaloutput1024_moe8
+TRAIN_DIR=$BUCKET_NAME/all/lstmparallelfinaloutput1024_moe8_version2
 
 gcloud --verbosity=debug ml-engine jobs submit training $JOB_NAME \
                                                       --package-path=youtube-8m \
@@ -37,10 +37,11 @@ gcloud --verbosity=debug ml-engine jobs submit training $JOB_NAME \
                                                       --feature_names="rgb,audio" \
                                                       --feature_sizes="1024,128" \
                                                       --moe_num_mixtures=8 \
-                                                      --batch_size=64 \
+                                                      --batch_size=256 \
                                                       --lstm_cells="1024,128" \
                                                       --base_learning_rate=0.001 \
                                                       --train_dir=$TRAIN_DIR  \
-                                                      --num_epoch=3 \
+                                                      --num_epoch=4 \
                                                       --rnn_swap_memory=True \
-                                                      --start_new_model=True
+                                                      --is_training=True
+                                                      # --start_new_model=True

@@ -2,39 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a39400fa-c46d-42b6-ac57-c6c1f6d2def6" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/python-terminal.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/all_frame_models/lstm.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/all_frame_models/lstm_audio.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/all_frame_models/multiscale_cnn_netvlad.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../scripts/gcloud-eval-frame-NetVLADModelLF.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../scripts/gcloud-eval-frame-local.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../scripts/gcloud-eval-frame-lstm.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../scripts/gcloud-eval-video-moe.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../scripts/gcloud-tensorboard-local.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../scripts/gcloud-tensorboard-local.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../scripts/gcloud-train-local.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../scripts/gcloud-train-local.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../scripts/pycharm_config.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../scripts/pycharm_config.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../scripts/run-multiscale-cnn-lstm-model.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../scripts/run-multiscale-cnn-lstm-model.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bagging_scripts/distillation-video-dcc-bagging.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/file_averaging.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../scripts/gcloud-eval-frame-multiscale-cnn-lstm-local.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../scripts/gcloud-eval-frame-multiscale-cnn-lstm.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../scripts/gcloud-inference-frame-NetVLADModelLF.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../scripts/gcloud-inference-frame-local.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../scripts/gcloud-inference-frame-lstm.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../scripts/gcloud-inference-multiscale-cnn-lstm-local.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../scripts/gcloud-inference-multiscale-cnn-lstm.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../scripts/gcloud-inference-video-moe.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../scripts/run-Gated_NetVLAD_LSTM.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../scripts/run-Gated_NetVLAD_LSTM.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../scripts/run-parallel-lstm-output.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../scripts/run-parallel-lstm-output.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/all_frame_models/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/all_frame_models/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/all_frame_models/lstm_parallel_finaloutput_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/all_frame_models/lstm_parallel_finaloutput_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/all_frame_models/multiscale_cnn_lstm_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/all_frame_models/multiscale_cnn_lstm_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/all_frame_models/netVLAD.py" beforeDir="false" afterPath="$PROJECT_DIR$/all_frame_models/netVLAD.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eval.py" beforeDir="false" afterPath="$PROJECT_DIR$/eval.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/all_video_models/moe_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/all_video_models/moe_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frame_level_models.py" beforeDir="false" afterPath="$PROJECT_DIR$/frame_level_models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inference.py" beforeDir="false" afterPath="$PROJECT_DIR$/inference.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/video_level_models.py" beforeDir="false" afterPath="$PROJECT_DIR$/video_level_models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yt8m_train_local/model1/checkpoint" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yt8m_train_local/model1/events.out.tfevents.1531363943.Shengchens-Air.home" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yt8m_train_local/model1/export/step_10/saved_model.pb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yt8m_train_local/model1/export/step_10/variables/variables.data-00000-of-00001" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yt8m_train_local/model1/export/step_10/variables/variables.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yt8m_train_local/model1/graph.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yt8m_train_local/model1/model.ckpt-0.data-00000-of-00001" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yt8m_train_local/model1/model.ckpt-0.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yt8m_train_local/model1/model.ckpt-0.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yt8m_train_local/model1/model.ckpt-10.data-00000-of-00001" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yt8m_train_local/model1/model.ckpt-10.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yt8m_train_local/model1/model.ckpt-10.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yt8m_train_local/model1/model_flags.json" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -46,34 +34,37 @@
     <session id="-2009321854">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="7" />
+          <entry key="project.closed" value="12" />
           <entry key="project.open.time.3" value="1" />
-          <entry key="project.open.time.5" value="4" />
-          <entry key="project.open.time.6" value="8" />
+          <entry key="project.open.time.5" value="6" />
+          <entry key="project.open.time.6" value="10" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.opened" value="14" />
+          <entry key="project.open.time.8" value="2" />
+          <entry key="project.opened" value="20" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="25" />
-          <entry key="py" value="1253" />
+          <entry key="py" value="1789" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="50" />
+          <entry key="Bash" value="1" />
+          <entry key="Python" value="73" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="50" />
+          <entry key="py" value="73" />
+          <entry key="sh" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="25" />
-          <entry key="Python" value="1253" />
+          <entry key="Python" value="1789" />
         </counts>
       </usages-collector>
     </session>
@@ -81,37 +72,60 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train.py">
+        <entry file="file://$PROJECT_DIR$/video_level_models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="12585">
-              <caret line="858" selection-start-line="858" selection-end-line="858" />
+            <state relative-caret-position="285">
+              <caret line="28" column="26" selection-start-line="28" selection-start-column="26" selection-end-line="28" selection-end-column="26" />
               <folding>
-                <element signature="e#669#680#0" expanded="true" />
+                <element signature="e#634#645#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frame_level_models.py">
+        <entry file="file://$PROJECT_DIR$/inference.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="690">
-              <caret line="48" column="34" selection-start-line="48" selection-start-column="19" selection-end-line="48" selection-end-column="34" />
+            <state relative-caret-position="2640">
+              <caret line="194" column="47" selection-start-line="194" selection-start-column="47" selection-end-line="194" selection-end-column="47" />
               <folding>
-                <element signature="e#682#692#0" expanded="true" />
+                <element signature="e#661#670#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/all_frame_models/multiscale_cnn_lstm_model.py">
+        <entry file="file://$PROJECT_DIR$/file_averaging.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="871">
-              <caret line="106" column="4" selection-start-line="106" selection-start-column="4" selection-end-line="106" selection-end-column="4" />
+            <state relative-caret-position="465">
+              <caret line="33" column="23" selection-start-line="33" selection-start-column="23" selection-end-line="33" selection-end-column="23" />
               <folding>
-                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#603#612#0" expanded="true" />
+                <marker date="1533595048212" expanded="true" signature="2436:2461" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="18" column="47" lean-forward="true" selection-start-line="18" selection-start-column="47" selection-end-line="18" selection-end-column="47" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+                <marker date="1533598899045" expanded="true" signature="1281:1283" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/eval.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="7680">
+              <caret line="528" column="22" selection-start-line="528" selection-end-line="528" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -120,25 +134,52 @@
         <entry file="file://$PROJECT_DIR$/all_frame_models/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="15">
-              <caret line="1" column="10" lean-forward="true" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
+              <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/losses.py">
+        <entry file="file://$PROJECT_DIR$/all_frame_models/netVLAD.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="23" column="52" selection-start-line="23" selection-start-column="52" selection-end-line="23" selection-end-column="52" />
+            <state relative-caret-position="290">
+              <caret line="413" column="23" selection-start-line="413" selection-start-column="23" selection-end-line="413" selection-end-column="23" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/all_frame_models/netVLAD.py">
+        <entry file="file://$PROJECT_DIR$/train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-11475">
-              <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
+            <state relative-caret-position="290">
+              <caret line="346" column="54" selection-start-line="346" selection-start-column="45" selection-end-line="346" selection-end-column="54" />
+              <folding>
+                <element signature="e#669#680#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/inference-pre-ensemble-with-predictions.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="4020">
+              <caret line="287" column="95" selection-start-line="287" selection-start-column="78" selection-end-line="287" selection-end-column="95" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/all_frame_models/multiscale_cnn_lstm_model.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="19" selection-start-line="19" selection-end-line="19" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -154,36 +195,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>build_graph</find>
-      <find>support_predictions</find>
-      <find>model.</find>
-      <find>concat</find>
-      <find>loss</find>
-      <find>lstm_random_sequence</find>
-      <find>sample</find>
-      <find>num_frames_</find>
-      <find>vertical_file</find>
-      <find>multitask</find>
-      <find>vertical</find>
-      <find>rnn</find>
-      <find>number</find>
-      <find>state</find>
-      <find>lstm</find>
-      <find>new</find>
-      <find>cells</find>
-      <find>278528</find>
-      <find>swap</find>
-      <find>batch_size</find>
+      <find>model_input</find>
+      <find>train_dir</find>
+      <find>NETVLADMODELLF</find>
+      <find>number_</find>
+      <find>hidden1_bn</find>
+      <find>moe</find>
+      <find>biases</find>
       <find>is_training</find>
-      <find>vocab_size</find>
-      <find>sub_scope</find>
-      <find>add_batch</find>
-      <find>num_layers</find>
-      <find>netvlad</find>
-      <find>num_filters</find>
-      <find>utils</find>
-      <find>num_frames</find>
-      <find>scope</find>
+      <find>experts</find>
+      <find>biase</find>
+      <find>num_ex</find>
+      <find>model</find>
+      <find>tarfile</find>
+      <find>tfrecord</find>
+      <find>output_file</find>
+      <find>file_size</find>
+      <find>video_id</find>
+      <find>write_to</find>
+      <find>output_dir</find>
+      <find>moe_num_</find>
+      <find>num_rea</find>
+      <find>OUTPUT</find>
+      <find>predictions</find>
+      <find>out_file_location</find>
+      <find>sigfigs</find>
+      <find>start</find>
+      <find>restoring</find>
+      <find>meta</find>
+      <find>check</find>
+      <find>inference</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -200,27 +241,32 @@
         <option value="$PROJECT_DIR$/all_video_models/__init__.py" />
         <option value="$PROJECT_DIR$/all_frame_models/mulitiscale_cnn_gru_model.py" />
         <option value="$PROJECT_DIR$/losses.py" />
-        <option value="$PROJECT_DIR$/inference.py" />
         <option value="$PROJECT_DIR$/all_frame_models/lstm.py" />
         <option value="$PROJECT_DIR$/video_level_models.py" />
-        <option value="$PROJECT_DIR$/all_video_models/moe_model.py" />
-        <option value="$PROJECT_DIR$/frame_level_models.py" />
         <option value="$PROJECT_DIR$/eval.py" />
         <option value="$PROJECT_DIR$/all_frame_models/lstm_audio.py" />
-        <option value="$PROJECT_DIR$/train.py" />
-        <option value="$PROJECT_DIR$/all_frame_models/multiscale_cnn_lstm_model.py" />
         <option value="$PROJECT_DIR$/all_frame_models/cnn_netVLAD.py" />
-        <option value="$PROJECT_DIR$/all_frame_models/netVLAD.py" />
         <option value="$PROJECT_DIR$/all_frame_models/multiscale_cnn_netvlad.py" />
+        <option value="$PROJECT_DIR$/frame_level_models.py" />
+        <option value="$PROJECT_DIR$/all_frame_models/lstm_parallel_finaloutput_model.py" />
+        <option value="$PROJECT_DIR$/bagging_scripts/distillation-video-dcc-bagging.sh" />
+        <option value="$PROJECT_DIR$/all_frame_models/multiscale_cnn_lstm_model.py" />
+        <option value="$PROJECT_DIR$/all_video_models/moe_model.py" />
+        <option value="$PROJECT_DIR$/inference-pre-ensemble.py" />
         <option value="$PROJECT_DIR$/all_frame_models/__init__.py" />
+        <option value="$PROJECT_DIR$/all_frame_models/netVLAD.py" />
+        <option value="$PROJECT_DIR$/inference.py" />
+        <option value="$PROJECT_DIR$/file_averaging.py" />
+        <option value="$PROJECT_DIR$/test.py" />
+        <option value="$PROJECT_DIR$/train.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="64" />
-    <option name="y" value="1069" />
-    <option name="width" value="1857" />
-    <option name="height" value="1092" />
+    <option name="x" value="65" />
+    <option name="y" value="-4" />
+    <option name="width" value="1855" />
+    <option name="height" value="1084" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -238,7 +284,7 @@
             <path>
               <item name="youtube-8m" type="b2602c69:ProjectViewProjectNode" />
               <item name="youtube-8m" type="462c0819:PsiDirectoryNode" />
-              <item name="all_frame_models" type="462c0819:PsiDirectoryNode" />
+              <item name="all_video_models" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -278,7 +324,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.train">
+  <component name="RunManager" selected="Python.test">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="youtube-8m" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -300,7 +346,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="eval" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="average_precision_calculator" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="youtube-8m" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/tensorflow/.env2/bin/python2.7" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/average_precision_calculator.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="inference-pre-ensemble" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="youtube-8m" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -312,8 +379,8 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/eval.py" />
-      <option name="PARAMETERS" value="--eval_data_pattern=$USER_HOME$/yt8m/v2/frame/validate*.tfrecord \ --frame_features=True \ --model=NetVLADModelLF \ --train_dir=$PROJECT_DIR$/../yt8m_train_local/all/gatednetvladLF-256k-1024-80-0002-300iter-norelu-basic-gatedmoe/ --feature_names=&quot;rgb,audio&quot; \ --feature_sizes=&quot;1024,128&quot; \ --batch_size=80 \ --base_learning_rate=0.0002 \ --learning_rate_decay=0.8 \ --netvlad_cluster_size=256 \ --netvlad_hidden_size=1024 \ --moe_l2=1e-6 \ --iterations=300 \ --netvlad_relu=False \ --gating=True \ --moe_prob_gating=True \ --is_training=False \ --moe_num_mixtures=2" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/inference-pre-ensemble.py" />
+      <option name="PARAMETERS" value="--input_data_pattern=/media/shengchen/Shengchen/yt8m/input/video/train*.tfrecord \ --train_dir=/media/shengchen/Shengchen/yt8m/yt8m_train_local/video_level_MoeModel \ --output_dir=/media/shengchen/Shengchen/yt8m/yt8m_train_local/video_level_MoeModel/predictions \ --model=MoeModel \ --frame_features=False \ --feature_names=&quot;mean_rgb,mean_audio&quot; \ --feature_sizes=&quot;1024,128&quot; \ --batch_size=512 \ --num_readers=8 \ --file_size=4096 \ --is_training=False \ --output_file=/media/shengchen/Shengchen/yt8m/yt8m_train_local/video_level_MoeModel/predictions.csv" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -334,7 +401,28 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/inference.py" />
-      <option name="PARAMETERS" value="--input_data_pattern=$USER_HOME$/yt8m/v2/frame/test*.tfrecord \ --train_dir=$PROJECT_DIR$/../yt8m_train_local/all/gatednetvladLF-256k-1024-80-0002-300iter-norelu-basic-gatedmoe \ --batch_size=1024 \ --num_readers=8 \ --output_file=$PROJECT_DIR$/../yt8m_train_local/all/gatednetvladLF-256k-1024-80-0002-300iter-norelu-basic-gatedmoe/predictions_gatedlightvladLF-256k-1024-80-0002-300iter-norelu-basic-gatedmoe.csv" />
+      <option name="PARAMETERS" value="--input_data_pattern=/media/shengchen/Shengchen/yt8m/input/video/train*.tfrecord \ --train_dir=/media/shengchen/Shengchen/yt8m/yt8m_train_local/video_level_MoeModel \ --output_dir=/media/shengchen/Shengchen/yt8m/yt8m_train_local/video_level_MoeModel/predictions \ --model=MoeModel \ --frame_features=False \ --feature_names=&quot;mean_rgb,mean_audio&quot; \ --feature_sizes=&quot;1024,128&quot; \ --batch_size=512 \ --num_readers=8 \ --file_size=4096 \ --is_training=False \ --output_file=/media/shengchen/Shengchen/yt8m/yt8m_train_local/video_level_MoeModel/predictions.csv" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="youtube-8m" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/tensorflow/.env2/bin/python2.7" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test.py" />
+      <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -355,7 +443,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/train.py" />
-      <option name="PARAMETERS" value="--train_data_pattern=/media/shengchen/Shengchen/yt8m/input/frame/train*.tfrecord \ --frame_features=True \ --model=MultiscaleCnnNetVLAD \ --train_dir=/media/shengchen/Shengchen/yt8m/yt8m_train_local/gatednetvladLF-256k-1024-80-0002-300iter-norelu-basic-gatedmoe-cnn-lstm \ --feature_names=&quot;rgb,audio&quot; \ --feature_sizes=&quot;1024,128&quot; \ --batch_size=80 \ --base_learning_rate=0.0002 \ --learning_rate_decay=0.8 \ --netvlad_cluster_size=256 \ --netvlad_hidden_size=1024 \ --moe_l2=1e-6 \ --iterations=300 \ --netvlad_relu=False \ --gating=True \ --moe_prob_gating=True \ --num_readers=4 \ --num_epochs=5 \ --sample_random_frames=False \ --start_new_model=True \ --multiscale_cnn_lstm_layers=4 \ --moe_num_mixtures=4 \" />
+      <option name="PARAMETERS" value="--train_data_pattern=/media/shengchen/Shengchen/yt8m/input/frame/train*.tfrecord \ --frame_features=True \ --train_dir=/media/shengchen/Shengchen/yt8m/yt8m_train_local/MultiscaleCnnLstmModel/ \ --model=MultiscaleCnnLstmModel \ --feature_names=&quot;rgb,audio&quot; \ --feature_sizes=&quot;1024,128&quot; \ --moe_num_mixtures=8 \ --batch_size=256 \ --lstm_cells=&quot;1024,128&quot; \ --base_learning_rate=0.001 \ --num_epoch=4 \ --rnn_swap_memory=True \ --is_training=True" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -365,14 +453,18 @@
     </configuration>
     <list>
       <item itemvalue="Python.train" />
-      <item itemvalue="Python.eval" />
       <item itemvalue="Python.inference" />
+      <item itemvalue="Python.inference-pre-ensemble" />
+      <item itemvalue="Python.average_precision_calculator" />
+      <item itemvalue="Python.test" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.train" />
+        <item itemvalue="Python.test" />
+        <item itemvalue="Python.average_precision_calculator" />
         <item itemvalue="Python.inference" />
-        <item itemvalue="Python.eval" />
+        <item itemvalue="Python.inference-pre-ensemble" />
+        <item itemvalue="Python.train" />
       </list>
     </recent_temporary>
   </component>
@@ -407,7 +499,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3294979" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32740587" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32740587" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.41736403" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -453,7 +545,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/all_frame_models/multiscale_cnn_lstm_model.py</url>
-          <line>18</line>
+          <line>19</line>
           <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -467,14 +559,39 @@
           <option name="timeStamp" value="40" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/all_frame_models/netVLAD.py</url>
-          <line>562</line>
-          <option name="timeStamp" value="41" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/all_frame_models/multiscale_cnn_netvlad.py</url>
           <line>318</line>
           <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/all_frame_models/lstm_parallel_finaloutput_model.py</url>
+          <line>65</line>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/train.py</url>
+          <line>716</line>
+          <option name="timeStamp" value="55" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/inference-pre-ensemble.py</url>
+          <line>298</line>
+          <option name="timeStamp" value="58" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/all_video_models/moe_model.py</url>
+          <line>46</line>
+          <option name="timeStamp" value="59" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/test.py</url>
+          <line>47</line>
+          <option name="timeStamp" value="62" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/train.py</url>
+          <line>745</line>
+          <option name="timeStamp" value="63" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -487,7 +604,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/frame_models/__init__.py" />
     <entry file="file://$PROJECT_DIR$/all_frame_models/frame_level_logistic_model.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
@@ -577,13 +693,6 @@
     <entry file="file://$USER_HOME$/tensorflow/.env2/lib/python2.7/site-packages/tensorflow/python/lib/io/file_io.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="63" selection-start-line="9" selection-start-column="63" selection-end-line="9" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/tensorflow/.env2/lib/python2.7/site-packages/tensorflow/python/framework/ops.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
@@ -595,13 +704,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1755">
           <caret line="125" selection-start-line="125" selection-end-line="125" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/inference.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="72" column="25" selection-start-line="72" selection-start-column="25" selection-end-line="72" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -633,13 +735,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret lean-forward="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/video_level_models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
         </state>
       </provider>
     </entry>
@@ -678,20 +773,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/eval.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="75" column="50" selection-start-line="75" selection-start-column="50" selection-end-line="75" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/tensorflow/.env2/local/lib/python2.7/site-packages/tensorflow/python/platform/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="124" selection-start-line="124" selection-end-line="124" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/all_frame_models/lstm.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
@@ -699,44 +780,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/all_video_models/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="23" selection-start-column="23" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="497">
           <caret line="154" column="59" selection-start-line="154" selection-start-column="59" selection-end-line="154" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/all_video_models/moe_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="55" selection-start-line="55" selection-end-line="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/train.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12585">
-          <caret line="858" selection-start-line="858" selection-end-line="858" />
-          <folding>
-            <element signature="e#669#680#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frame_level_models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
-          <caret line="48" column="34" selection-start-line="48" selection-start-column="19" selection-end-line="48" selection-end-column="34" />
-          <folding>
-            <element signature="e#682#692#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -750,6 +797,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/tensorflow/.env2/local/lib/python2.7/site-packages/tensorflow/python/framework/ops.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="6013" selection-start-line="6013" selection-end-line="6013" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/tensorflow/.env2/local/lib/python2.7/site-packages/tensorflow/python/training/saver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="1854" selection-start-line="1854" selection-end-line="1854" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="63" selection-start-line="9" selection-start-column="63" selection-end-line="9" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/losses.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
@@ -757,19 +825,126 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/frame_level_models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="41" column="32" selection-start-line="41" selection-start-column="21" selection-end-line="41" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bagging_scripts/distillation-video-dcc-bagging.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="50" column="45" lean-forward="true" selection-start-line="50" selection-start-column="45" selection-end-line="50" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/all_video_models/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="23" selection-start-column="23" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/tensorflow/.env2/local/lib/python2.7/site-packages/tensorflow/python/platform/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="124" selection-start-line="124" selection-end-line="124" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/all_frame_models/lstm_parallel_finaloutput_model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="15" column="48" lean-forward="true" selection-start-line="15" selection-start-column="48" selection-end-line="15" selection-end-column="48" />
+        <state relative-caret-position="210">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/inference-pre-ensemble.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="45" selection-start-line="45" selection-end-line="46" selection-end-column="61" />
+          <folding>
+            <element signature="e#661#670#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/all_video_models/moe_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="16" column="27" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/video_level_models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="28" column="26" selection-start-line="28" selection-start-column="26" selection-end-line="28" selection-end-column="26" />
+          <folding>
+            <element signature="e#634#645#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/inference.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2640">
+          <caret line="194" column="47" selection-start-line="194" selection-start-column="47" selection-end-line="194" selection-end-column="47" />
+          <folding>
+            <element signature="e#661#670#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/file_averaging.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="33" column="23" selection-start-line="33" selection-start-column="23" selection-end-line="33" selection-end-column="23" />
+          <folding>
+            <element signature="e#603#612#0" expanded="true" />
+            <marker date="1533595048212" expanded="true" signature="2436:2461" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eval.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7680">
+          <caret line="528" column="22" selection-start-line="528" selection-end-line="528" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/inference-pre-ensemble-with-predictions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4020">
+          <caret line="287" column="95" selection-start-line="287" selection-start-column="78" selection-end-line="287" selection-end-column="95" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/all_frame_models/multiscale_cnn_lstm_model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="871">
-          <caret line="106" column="4" selection-start-line="106" selection-start-column="4" selection-end-line="106" selection-end-column="4" />
+        <state relative-caret-position="195">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="47" lean-forward="true" selection-start-line="18" selection-start-column="47" selection-end-line="18" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+            <marker date="1533598899045" expanded="true" signature="1281:1283" ph="..." />
           </folding>
         </state>
       </provider>
@@ -777,14 +952,27 @@
     <entry file="file://$PROJECT_DIR$/all_frame_models/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
-          <caret line="1" column="10" lean-forward="true" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
+          <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/all_frame_models/netVLAD.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-11475">
-          <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
+        <state relative-caret-position="290">
+          <caret line="413" column="23" selection-start-line="413" selection-start-column="23" selection-end-line="413" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="346" column="54" selection-start-line="346" selection-start-column="45" selection-end-line="346" selection-end-column="54" />
+          <folding>
+            <element signature="e#669#680#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

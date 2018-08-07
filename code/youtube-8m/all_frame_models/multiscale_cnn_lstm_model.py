@@ -16,6 +16,7 @@ class MultiscaleCnnLstmModel(models.BaseModel):
           filter_sizes = [1,2,3], 
           sub_scope="",
           **unused_params):
+    # print(model_input.get_shape())
     max_frames = model_input.get_shape().as_list()[1]
     num_features = model_input.get_shape().as_list()[2]
 

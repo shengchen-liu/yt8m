@@ -3,7 +3,7 @@ import models
 import model_utils
 import math
 import numpy as np
-import video_level_models
+from .. import video_level_models
 import tensorflow as tf
 import utils
 import tensorflow.contrib.slim as slim
@@ -69,5 +69,6 @@ class LstmParallelFinaloutputModel(models.BaseModel):
         model_input=final_state,
         original_input=model_input,
         vocab_size=vocab_size,
+        is_training=FLAGS.is_training,
         **unused_params)
 

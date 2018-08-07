@@ -714,12 +714,16 @@ class Trainer(object):
             return None
 
         latest_checkpoint = tf.train.latest_checkpoint(train_dir)
+        # latest_checkpoint = "model.ckpt-137964"
+        print("...............................", latest_checkpoint)
+
         if not latest_checkpoint:
             logging.info("%s: No checkpoint file found. Building a new model.",
                          task_as_string(self.task))
             return None
 
         meta_filename = latest_checkpoint + ".meta"
+        print("metafile:...........................................", meta_filename)
         if not gfile.Exists(meta_filename):
             logging.info("%s: No meta graph file found. Building a new model.",
                          task_as_string(self.task))

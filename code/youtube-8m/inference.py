@@ -21,6 +21,7 @@ import tarfile
 import time
 
 import numpy
+import numpy as np
 import tensorflow as tf
 from tensorflow.python.lib.io import file_io
 from tensorflow import app
@@ -56,9 +57,13 @@ if __name__ == '__main__':
                       "If --input_model_tgz is given, then this directory will "
                       "be created and the contents of the .tgz file will be "
                       "untarred here.")
+  flags.DEFINE_integer("file_size", 4096,
+                       "Number of frames per batch for DBoF.")
 
   # Output
   flags.DEFINE_string("output_file", "",
+                      "The file to save the predictions to.")
+  flags.DEFINE_string("output_dir", "",
                       "The file to save the predictions to.")
   flags.DEFINE_string("output_model_tgz", "",
                       "If given, should be a filename with a .tgz extension, "
@@ -167,14 +172,42 @@ def inference(reader, train_dir, data_pattern, out_file_location, batch_size, to
     start_time = time.time()
     out_file.write("VideoId,LabelConfidencePairs\n")
 
+    filenum = 0
+    video_id = []
+    video_label = []
+    video_features = []
+    num_examples_processed = 0
+
+
     try:
       while not coord.should_stop():
+
           video_id_batch_val, video_batch_val,num_frames_batch_val = sess.run([video_id_batch, video_batch, num_frames_batch])
           predictions_val, = sess.run([predictions_tensor], feed_dict={input_tensor: video_batch_val, num_frames_tensor: num_frames_batch_val})
+
+
+          video_id.append(video_id_batch_val)
+          video_label.append(video_batch_val)
+          video_features.append(predictions_val)
+
           now = time.time()
           num_examples_processed += len(video_batch_val)
           num_classes = predictions_val.shape[1]
           logging.info("num examples processed: " + str(num_examples_processed) + " elapsed seconds: " + "{0:.2f}".format(now-start_time))
+
+          if num_examples_processed >= FLAGS.file_size:
+              assert num_examples_processed == FLAGS.file_size, "num_examples_processed should be equal to file_size"
+              video_id = np.concatenate(video_id, axis=0)
+              video_label = np.concatenate(video_label, axis=0)
+              video_features = np.concatenate(video_features, axis=0)
+              write_to_record(video_id, video_label, video_features, filenum, num_examples_processed)
+
+              filenum += 1
+              video_id = []
+              video_label = []
+              video_features = []
+              num_examples_processed = 0
+
           for line in format_lines(video_id_batch_val, predictions_val, top_k):
             out_file.write(line)
           out_file.flush()
@@ -187,6 +220,26 @@ def inference(reader, train_dir, data_pattern, out_file_location, batch_size, to
 
     coord.join(threads)
     sess.close()
+
+
+def write_to_record(id_batch, label_batch, predictions, filenum, num_examples_processed):
+    writer = tf.python_io.TFRecordWriter(FLAGS.output_dir + '/' + 'predictions-%04d.tfrecord' % filenum)
+    for i in range(num_examples_processed):
+        video_id = id_batch[i]
+        label = np.nonzero(label_batch[i,:])[0]
+        example = get_output_feature(video_id, label, [predictions[i,:]], ['predictions'])
+        serialized = example.SerializeToString()
+        writer.write(serialized)
+    writer.close()
+
+def get_output_feature(video_id, labels, features, feature_names):
+    feature_maps = {'video_id': tf.train.Feature(bytes_list=tf.train.BytesList(value=[video_id])),
+                    'labels': tf.train.Feature(int64_list=tf.train.Int64List(value=labels))}
+    for feature_index in range(len(feature_names)):
+        feature_maps[feature_names[feature_index]] = tf.train.Feature(
+            float_list=tf.train.FloatList(value=features[feature_index]))
+    example = tf.train.Example(features=tf.train.Features(feature=feature_maps))
+    return example
 
 
 def main(unused_argv):

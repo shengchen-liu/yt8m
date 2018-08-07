@@ -12,7 +12,7 @@ gcloud --verbosity=debug ml-engine jobs submit training $JOB_NAME \
                                                       --package-path=youtube-8m \
                                                       --module-name=youtube-8m.train \
                                                       --staging-bucket=$BUCKET_NAME --region=us-central1 \
-                                                      --config=youtube-8m/cloudml-gpu.yaml \
+                                                      --config=youtube-8m/cloudml-gpup100.yaml \
                                                       -- --train_data_pattern='gs://youtube8m-ml-us-east1/2/frame/train/train*.tfrecord' \
                                                       --frame_features=True \
                                                       --model=$MODEL_NAME \
@@ -33,4 +33,5 @@ gcloud --verbosity=debug ml-engine jobs submit training $JOB_NAME \
                                                       --num_epochs=5 \
                                                       --sample_random_frames=False \
                                                       --lstm_random_sequence=False \
-                                                      --is_training=True
+                                                      --is_training=True \
+                                                      --start_new_model=False
